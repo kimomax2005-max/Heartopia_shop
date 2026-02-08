@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heartopia Shop</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #fff5f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #555;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #ff6b9d;
+            margin: 10px 0;
+            font-size: 24px;
+        }
+
+        .shop-item {
+            background: white;
+            width: 100%;
+            max-width: 350px;
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(255, 107, 157, 0.1);
+            border: 1px solid #ffeef2;
+        }
+
+        .item-details h3 {
+            margin: 0;
+            color: #ff4081;
+            font-size: 18px;
+        }
+
+        .item-details p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            font-weight: bold;
+            color: #888;
+        }
+
+        .buy-button {
+            background-color: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .buy-button:active {
+            transform: scale(0.9);
+            background-color: #f06292;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>💖 Heartopia Shop</h1>
+        <p>မြန်ဆန်စိတ်ချရသော Hearts ရောင်းဝယ်ရေး</p>
+    </div>
+
+    <div class="shop-item">
+        <div class="item-details">
+            <h3>60 Hearts</h3>
+            <p>1,200 MMK</p>
+        </div>
+        <button class="buy-button" onclick="buyItem('60 Hearts', '1,200')">ဝယ်မည်</button>
+    </div>
+
+    <div class="shop-item">
+        <div class="item-details">
+            <h3>300 Hearts</h3>
+            <p>5,500 MMK</p>
+        </div>
+        <button class="buy-button" onclick="buyItem('300 Hearts', '5,500')">ဝယ်မည်</button>
+    </div>
+
+    <div class="shop-item">
+        <div class="item-details">
+            <h3>680 Hearts</h3>
+            <p>12,000 MMK</p>
+        </div>
+        <button class="buy-button" onclick="buyItem('680 Hearts', '12,000')">ဝယ်မည်</button>
+    </div>
+
+    <div class="footer">
+        © 2026 Heartopia Fan Shop
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // Screen အပြည့်ဖွင့်ခိုင်းတာ
+
+        function buyItem(item, price) {
+            // ဝယ်သူက ဝယ်မည်နှိပ်လိုက်ရင် Bot ဆီ စာပို့ပေးမှာပါ
+            tg.sendData("ဝယ်ယူလိုသည့်အရာ: " + item + " (ဈေးနှုန်း: " + price + " MMK)");
+            tg.close(); // ဝယ်ပြီးရင် App ပိတ်သွားမယ်
+        }
+    </script>
+</body>
+</html>
+
