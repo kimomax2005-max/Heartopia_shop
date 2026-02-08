@@ -6,62 +6,95 @@
     <title>Heartopia Shop Pro</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: sans-serif; background-color: #fff5f8; text-align: center; padding: 20px; color: #444; }
-        .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #ffe0e9; }
-        h1 { color: #ff6b9d; }
-        .price { font-weight: bold; color: #ff4081; font-size: 1.2em; }
-        .btn { background: #ff6b9d; color: white; border: none; padding: 12px 25px; border-radius: 15px; font-weight: bold; cursor: pointer; width: 100%; }
-        /* Modal Style for QR */
-        #qrModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: white; padding: 20px; border-radius: 20px; width: 80%; }
-        .modal-content img { width: 100%; border-radius: 10px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fff5f8; text-align: center; padding: 20px; color: #444; margin: 0; }
+        .header { margin-bottom: 25px; padding-top: 10px; }
+        .header h1 { color: #ff6b9d; font-size: 26px; margin-bottom: 5px; }
+        .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(255, 107, 157, 0.1); border: 1px solid #ffeef2; display: flex; justify-content: space-between; align-items: center; }
+        .item-info { text-align: left; }
+        .item-info h3 { margin: 0; color: #ff4081; font-size: 18px; }
+        .item-info p { margin: 5px 0 0; font-weight: bold; color: #7d7d7d; }
+        .btn { background: linear-gradient(135deg, #ff85a2, #ff4081); color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn:active { transform: scale(0.9); }
+        
+        /* Payment Overlay */
+        #paymentModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; padding: 20px; box-sizing: border-box; }
+        .modal-content { background: #fff; padding: 25px; border-radius: 25px; width: 100%; max-width: 350px; position: relative; }
+        .qr-img { width: 100%; border-radius: 15px; margin: 15px 0; border: 2px solid #eee; }
+        .close-btn { background: #eee; color: #555; border: none; padding: 10px; border-radius: 10px; width: 100%; font-weight: bold; margin-top: 10px; }
+        .status-msg { font-size: 14px; color: #ff4081; font-weight: bold; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <h1>💖 Heartopia Premium</h1>
-    <p>စိတ်ကြိုက်အထုပ်ကို ရွေးချယ်ပါ</p>
-
-    <div class="card">
-        <h3>300 Hearts</h3>
-        <p class="price">5,500 MMK</p>
-        <button class="btn" onclick="order('300 Hearts', '5,500')">ဝယ်ယူမည်</button>
+    <div class="header">
+        <h1>💖 Heartopia Shop</h1>
+        <p>စိတ်ချရသော Hearts အရောင်းဆိုင်</p>
     </div>
 
     <div class="card">
-        <h3>680 Hearts</h3>
-        <p class="price">12,000 MMK</p>
-        <button class="btn" onclick="order('680 Hearts', '12,000')">ဝယ်ယူမည်</button>
+        <div class="item-info">
+            <h3>60 Hearts</h3>
+            <p>1,200 MMK</p>
+        </div>
+        <button class="btn" onclick="openPayment('60 Hearts', '1,200')">ဝယ်မည်</button>
     </div>
 
-    <div id="qrModal">
+    <div class="card">
+        <div class="item-info">
+            <h3>300 Hearts</h3>
+            <p>5,500 MMK</p>
+        </div>
+        <button class="btn" onclick="openPayment('300 Hearts', '5,500')">ဝယ်မည်</button>
+    </div>
+
+    <div class="card">
+        <div class="item-info">
+            <h3>680 Hearts</h3>
+            <p>12,000 MMK</p>
+        </div>
+        <button class="btn" onclick="openPayment('680 Hearts', '12,000')">ဝယ်မည်</button>
+    </div>
+
+    <div id="paymentModal">
         <div class="modal-content">
-            <h3>ငွေပေးချေရန် QR Scan ဖတ်ပါ</h3>
-            <img src="https://placehold.co/300x400?text=Your+KPay+QR+Here" id="qrImage">
-            <p>ငွေလွှဲပြီးပါက Screenshot ပို့ပေးပါ။</p>
-            <button class="btn" onclick="closeModal()">ပိတ်မည်</button>
+            <h2 style="color:#ff4081; margin:0;">ငွေပေးချေရန်</h2>
+            <p id="order-desc" style="margin:10px 0; font-weight:bold;"></p>
+            
+            <img src="https://raw.githubusercontent.com/kimomax2005-max/Heartopia_shop/main/1770549719456.jpg" class="qr-img" alt="KPay QR">
+            
+            <p style="font-size: 13px; color: #666;">QR Scan ဖတ်၍ ငွေလွှဲပါ။<br>လွှဲပြီးလျှင် Screenshot ကို Bot ဆီ ပေးပို့ပါ။</p>
+            <button class="btn" style="width:100%;" onclick="confirmOrder()">အော်ဒါတင်မည်</button>
+            <button class="close-btn" onclick="closePayment()">မဝယ်တော့ပါ</button>
         </div>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        let username = tg.initDataUnsafe?.user?.username || "Unknown";
+        
+        let currentItem = "";
+        let currentPrice = "";
 
-        function order(item, price) {
-            // ၁။ သင့် Bot ဆီကို စာပို့မယ်
-            let text = `🔔 Order New!\n👤 User: @${username}\n📦 Item: ${item}\n💰 Price: ${price} MMK`;
-            tg.sendData(text);
-
-            // ၂။ QR Code Modal ကို ပြမယ်
-            document.getElementById('qrModal').style.display = 'flex';
+        function openPayment(item, price) {
+            currentItem = item;
+            currentPrice = price;
+            document.getElementById('order-desc').innerText = item + " - " + price + " MMK";
+            document.getElementById('paymentModal').style.display = 'flex';
         }
 
-        function closeModal() {
-            document.getElementById('qrModal').style.display = 'none';
-            tg.close();
+        function closePayment() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function confirmOrder() {
+            let user = tg.initDataUnsafe?.user?.username || tg.initDataUnsafe?.user?.first_name || "Unknown User";
+            
+            // Bot ဆီကို အော်ဒါအချက်အလက် ပို့ခြင်း
+            let message = `🔔 **Order New!**\n\n👤 ဝယ်သူ: @${user}\n📦 ပစ္စည်း: ${currentItem}\n💰 ဈေးနှုန်း: ${currentPrice} MMK\n\n(ဝယ်သူသည် QR ကြည့်ပြီး အော်ဒါတင်လိုက်ပါပြီ)`;
+            
+            tg.sendData(message); // ဒါက Bot ဆီ စာလှမ်းပို့တာပါ
+            tg.close(); // ပို့ပြီးရင် Web App ပိတ်သွားမယ်
         }
     </script>
 </body>
 </html>
-
