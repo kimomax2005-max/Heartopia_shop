@@ -3,124 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heartopia Shop</title>
+    <title>Heartopia Shop Pro</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #fff5f8;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #555;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: #ff6b9d;
-            margin: 10px 0;
-            font-size: 24px;
-        }
-
-        .shop-item {
-            background: white;
-            width: 100%;
-            max-width: 350px;
-            border-radius: 20px;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(255, 107, 157, 0.1);
-            border: 1px solid #ffeef2;
-        }
-
-        .item-details h3 {
-            margin: 0;
-            color: #ff4081;
-            font-size: 18px;
-        }
-
-        .item-details p {
-            margin: 5px 0 0;
-            font-size: 14px;
-            font-weight: bold;
-            color: #888;
-        }
-
-        .buy-button {
-            background-color: #ff6b9d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .buy-button:active {
-            transform: scale(0.9);
-            background-color: #f06292;
-        }
-
-        .footer {
-            margin-top: 30px;
-            font-size: 12px;
-            color: #bbb;
-        }
+        body { font-family: sans-serif; background-color: #fff5f8; text-align: center; padding: 20px; color: #444; }
+        .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #ffe0e9; }
+        h1 { color: #ff6b9d; }
+        .price { font-weight: bold; color: #ff4081; font-size: 1.2em; }
+        .btn { background: #ff6b9d; color: white; border: none; padding: 12px 25px; border-radius: 15px; font-weight: bold; cursor: pointer; width: 100%; }
+        /* Modal Style for QR */
+        #qrModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 20px; border-radius: 20px; width: 80%; }
+        .modal-content img { width: 100%; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>💖 Heartopia Shop</h1>
-        <p>မြန်ဆန်စိတ်ချရသော Hearts ရောင်းဝယ်ရေး</p>
+    <h1>💖 Heartopia Premium</h1>
+    <p>စိတ်ကြိုက်အထုပ်ကို ရွေးချယ်ပါ</p>
+
+    <div class="card">
+        <h3>300 Hearts</h3>
+        <p class="price">5,500 MMK</p>
+        <button class="btn" onclick="order('300 Hearts', '5,500')">ဝယ်ယူမည်</button>
     </div>
 
-    <div class="shop-item">
-        <div class="item-details">
-            <h3>60 Hearts</h3>
-            <p>1,200 MMK</p>
+    <div class="card">
+        <h3>680 Hearts</h3>
+        <p class="price">12,000 MMK</p>
+        <button class="btn" onclick="order('680 Hearts', '12,000')">ဝယ်ယူမည်</button>
+    </div>
+
+    <div id="qrModal">
+        <div class="modal-content">
+            <h3>ငွေပေးချေရန် QR Scan ဖတ်ပါ</h3>
+            <img src="https://placehold.co/300x400?text=Your+KPay+QR+Here" id="qrImage">
+            <p>ငွေလွှဲပြီးပါက Screenshot ပို့ပေးပါ။</p>
+            <button class="btn" onclick="closeModal()">ပိတ်မည်</button>
         </div>
-        <button class="buy-button" onclick="buyItem('60 Hearts', '1,200')">ဝယ်မည်</button>
-    </div>
-
-    <div class="shop-item">
-        <div class="item-details">
-            <h3>300 Hearts</h3>
-            <p>5,500 MMK</p>
-        </div>
-        <button class="buy-button" onclick="buyItem('300 Hearts', '5,500')">ဝယ်မည်</button>
-    </div>
-
-    <div class="shop-item">
-        <div class="item-details">
-            <h3>680 Hearts</h3>
-            <p>12,000 MMK</p>
-        </div>
-        <button class="buy-button" onclick="buyItem('680 Hearts', '12,000')">ဝယ်မည်</button>
-    </div>
-
-    <div class="footer">
-        © 2026 Heartopia Fan Shop
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
-        tg.expand(); // Screen အပြည့်ဖွင့်ခိုင်းတာ
+        tg.expand();
+        let username = tg.initDataUnsafe?.user?.username || "Unknown";
 
-        function buyItem(item, price) {
-            // ဝယ်သူက ဝယ်မည်နှိပ်လိုက်ရင် Bot ဆီ စာပို့ပေးမှာပါ
-            tg.sendData("ဝယ်ယူလိုသည့်အရာ: " + item + " (ဈေးနှုန်း: " + price + " MMK)");
-            tg.close(); // ဝယ်ပြီးရင် App ပိတ်သွားမယ်
+        function order(item, price) {
+            // ၁။ သင့် Bot ဆီကို စာပို့မယ်
+            let text = `🔔 Order New!\n👤 User: @${username}\n📦 Item: ${item}\n💰 Price: ${price} MMK`;
+            tg.sendData(text);
+
+            // ၂။ QR Code Modal ကို ပြမယ်
+            document.getElementById('qrModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('qrModal').style.display = 'none';
+            tg.close();
         }
     </script>
 </body>
