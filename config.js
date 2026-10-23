@@ -1,0 +1,2 @@
+import {publicConfig,json} from './_lib.js';
+export default function handler(req,res){if(req.method!=='GET')return json(res,405,{error:'Method not allowed'});try{return json(res,200,publicConfig());}catch(e){return json(res,500,{error:e.message});}}
