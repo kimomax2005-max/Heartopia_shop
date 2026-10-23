@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080a13"><title>CYBER KING TOP-UP</title>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<div class="ambient a1"></div><div class="ambient a2"></div>
+<header class="topbar glass">
+  <a class="brand" href="/"><span class="brand-mark">CK</span><span>CYBER KING<small>GAME TOP-UP</small></span></a>
+  <nav><a href="#games">Games</a><a href="#how">How it works</a><a href="/admin.html">Admin</a></nav>
+  <a class="pill-link" href="#order">Top up <span>↗</span></a>
+</header>
+<main>
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow"><i></i> DIGITAL GAME STORE</div>
+    <h1>Power up your<br><span>next victory.</span></h1>
+    <p>Fast, clear and player-first top-ups for your favourite games. Submit an order and track its verification status.</p>
+    <div class="hero-actions"><a class="btn primary" href="#games">Explore games <b>↗</b></a><a class="text-link" href="#how">How orders work <span>→</span></a></div>
+    <div class="trust-row"><div class="avatar-stack"><b>M</b><b>P</b><b>+</b></div><span><strong>Simple ordering</strong><small>Payment is manually verified</small></span></div>
+  </div>
+  <div class="hero-art">
+    <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+    <div class="core-card glass"><div class="core-top"><span>PLAYER SUPPLY</span><span class="live-dot">● ONLINE</span></div>
+      <div class="crystal">✦</div><div class="core-title">LEVEL UP</div><div class="core-sub">YOUR GAME. YOUR RULES.</div>
+      <div class="stat-strip"><span><b>01</b><small>Choose</small></span><span><b>02</b><small>Order</small></span><span><b>03</b><small>Verify</small></span></div>
+    </div>
+    <div class="float-tag tag-top">✦ <span>DIAMONDS</span></div><div class="float-tag tag-bottom">◈ <span>UC & MORE</span></div>
+  </div>
+</section>
+<section class="section" id="games">
+  <div class="section-heading"><div><div class="eyebrow">CHOOSE YOUR ARENA</div><h2>Popular <span>games</span></h2></div><p>Pick a game to see available packages.</p></div>
+  <div class="game-grid" id="gameGrid">
+    <button class="game-card selected" data-game="MLBB"><div class="game-symbol ml">M</div><div><b>Mobile Legends</b><small>Diamonds</small></div><span class="arrow">↗</span></button>
+    <button class="game-card" data-game="PUBG"><div class="game-symbol pubg">P</div><div><b>PUBG MOBILE</b><small>Unknown Cash (UC)</small></div><span class="arrow">↗</span></button>
+    <button class="game-card" data-game="FREE FIRE"><div class="game-symbol ff">F</div><div><b>Free Fire</b><small>Diamonds</small></div><span class="arrow">↗</span></button>
+    <button class="game-card" data-game="HONKAI"><div class="game-symbol hk">H</div><div><b>Honkai: Star Rail</b><small>Oneiric Shards</small></div><span class="arrow">↗</span></button>
+  </div>
+</section>
+<section class="section order-section" id="order">
+ <div class="section-heading"><div><div class="eyebrow">ORDER CONSOLE</div><h2>Build your <span>order</span></h2></div><div class="secure-label">◈ SECURE ORDER SUBMISSION</div></div>
+ <div class="order-layout">
+  <form id="orderForm" class="glass form-card">
+   <div class="form-title"><span class="step">01</span><div><b>Player details</b><small>Enter the correct game account ID.</small></div></div>
+   <label>Game<select id="game" required><option>MLBB</option><option>PUBG</option><option>FREE FIRE</option><option>HONKAI</option></select></label>
+   <div class="two-fields"><label>Player ID<input id="playerId" required maxlength="60" placeholder="Enter Player ID"></label><label>Server / Zone<input id="serverId" maxlength="30" placeholder="e.g. 1234 (if needed)"></label></div>
+   <label>Package<select id="package" required></select></label>
+   <div class="form-title gap-top"><span class="step">02</span><div><b>Contact & payment</b><small>Payment is not automatically confirmed.</small></div></div>
+   <label>Contact (Telegram / phone)<input id="contact" required maxlength="100" placeholder="@yourusername or phone"></label>
+   <label>Payment method<select id="payment" required><option value="KBZPay">KBZPay — manual verification</option><option value="WavePay">WavePay — manual verification</option><option value="Other">Other — contact admin</option></select></label>
+   <label>Payment reference <span class="optional">optional</span><input id="paymentRef" maxlength="100" placeholder="Reference only — never enter PIN/password"></label>
+   <label class="checkline"><input type="checkbox" id="confirm" required><span>I checked my Player ID and understand the order stays pending until admin verification.</span></label>
+   <button class="btn primary submit-btn" type="submit">Submit order <span>→</span></button><p class="fine-print">Do not submit payment PINs, passwords, or card details. No payment is processed on this website.</p>
+   <div id="formMessage" class="message" role="status"></div>
+  </form>
+  <aside class="glass summary-card"><div class="summary-head"><span>ORDER SUMMARY</span><span class="summary-icon">✦</span></div><div class="summary-game" id="summaryGame">Mobile Legends</div><div class="summary-package" id="summaryPackage">86 Diamonds</div><div class="summary-divider"></div><div class="summary-line"><span>Package price</span><b id="summaryPrice">3,000 MMK</b></div><div class="summary-line"><span>Payment status</span><span class="pending">PENDING</span></div><div class="summary-note">Your order ID appears after successful submission. An admin must verify payment before fulfilment.</div><div class="summary-decoration">✧</div></aside>
+ </div>
+</section>
+<section class="section how-section" id="how"><div class="eyebrow">STRAIGHTFORWARD PROCESS</div><h2>From tap to <span>top-up</span></h2><div class="steps"><div class="step-card"><span>01</span><h3>Choose package</h3><p>Select your game and package, then enter your player details carefully.</p></div><div class="step-card"><span>02</span><h3>Submit order</h3><p>Send your order and follow the admin's official payment instructions.</p></div><div class="step-card"><span>03</span><h3>Admin verifies</h3><p>Payment remains pending until an administrator checks it independently.</p></div></div></section>
+</main>
+<footer><a class="brand" href="#"><span class="brand-mark">CK</span><span>CYBER KING<small>GAME TOP-UP</small></span></a><span>© 2026 CYBER KING. Player-first ordering.</span><span class="footer-status"><i></i> ORDER SYSTEM</span></footer>
+<script src="/assets/app.js"></script>
+</body></html>
